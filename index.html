@@ -1,15 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>CRANOVA</title>
-<meta name="description" content="CRANOVA is an independent game studio developing PC games.">
+<title>CRANOVA | Independent Game Studio</title>
+<meta name="description" content="CRANOVA는 시스템 중심의 멀티플랫폼 게임을 개발하는 독립 게임 스튜디오입니다.">
 
 <style>
 :root{
   --bg:#07090d;
   --panel:#0d1117;
+  --panel-hover:#131822;
   --line:rgba(255,255,255,.09);
   --line-strong:rgba(255,255,255,.15);
   --text:#f4f6f8;
@@ -26,7 +27,7 @@ body{
   margin:0;
   background:#07090d;
   color:var(--text);
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
@@ -37,7 +38,7 @@ img{display:block;max-width:100%;height:auto}
   margin-inline:auto;
 }
 
-/* subtle background */
+/* background */
 .page-bg{
   position:fixed;
   inset:0;
@@ -87,6 +88,7 @@ img{display:block;max-width:100%;height:auto}
   gap:28px;
   color:#aeb6c2;
   font-size:13px;
+  font-weight:600;
 }
 .nav-links a:hover{color:#fff}
 
@@ -95,7 +97,7 @@ img{display:block;max-width:100%;height:auto}
   border-bottom:1px solid var(--line);
 }
 .hero-inner{
-  min-height:600px;
+  min-height:580px;
   padding:72px 0;
   display:grid;
   grid-template-columns:minmax(0,1.05fr) minmax(280px,.65fr);
@@ -112,15 +114,16 @@ img{display:block;max-width:100%;height:auto}
 }
 .hero h1{
   margin:16px 0 0;
-  font-size:clamp(58px,8.5vw,110px);
-  line-height:.92;
+  font-size:clamp(52px,7.5vw,96px);
+  line-height:.95;
   letter-spacing:-.055em;
+  font-weight:900;
 }
 .hero-copy{
   margin:24px 0 0;
   max-width:620px;
   color:var(--muted);
-  font-size:clamp(16px,1.6vw,18px);
+  font-size:clamp(15px,1.5vw,17px);
   line-height:1.75;
 }
 .tags{
@@ -133,7 +136,7 @@ img{display:block;max-width:100%;height:auto}
 .game-tags span{
   border:1px solid var(--line-strong);
   border-radius:6px;
-  padding:7px 10px;
+  padding:6px 10px;
   color:#b9c1cc;
   font-size:10px;
   font-weight:750;
@@ -146,7 +149,7 @@ img{display:block;max-width:100%;height:auto}
   min-width:0;
 }
 .hero-visual img{
-  width:min(100%,360px);
+  width:min(100%,340px);
   aspect-ratio:1;
   object-fit:cover;
   border-radius:50%;
@@ -161,7 +164,7 @@ img{display:block;max-width:100%;height:auto}
   border-bottom:1px solid var(--line);
 }
 .section-head{
-  margin-bottom:32px;
+  margin-bottom:40px;
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(280px,480px);
   gap:36px;
@@ -179,7 +182,12 @@ img{display:block;max-width:100%;height:auto}
   line-height:1.7;
 }
 
-/* GAME */
+/* GAMES GRID & CARD */
+.games-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:32px;
+}
 .game-card{
   overflow:hidden;
   border:1px solid var(--line);
@@ -188,7 +196,7 @@ img{display:block;max-width:100%;height:auto}
 }
 .game-art{
   width:100%;
-  aspect-ratio:1232 / 706;
+  aspect-ratio:1232 / 500;
   overflow:hidden;
   background:#111821;
 }
@@ -198,7 +206,7 @@ img{display:block;max-width:100%;height:auto}
   object-fit:cover;
 }
 .game-body{
-  padding:30px;
+  padding:32px;
   display:grid;
   grid-template-columns:minmax(0,1fr) auto;
   gap:32px;
@@ -206,13 +214,13 @@ img{display:block;max-width:100%;height:auto}
 }
 .status{
   color:var(--violet);
-  font-size:10px;
+  font-size:11px;
   font-weight:800;
   letter-spacing:.16em;
 }
 .game-title{
   margin:10px 0 12px;
-  font-size:clamp(30px,4vw,42px);
+  font-size:clamp(28px,3.5vw,38px);
   letter-spacing:-.04em;
 }
 .game-desc{
@@ -228,74 +236,158 @@ img{display:block;max-width:100%;height:auto}
   flex-wrap:wrap;
   gap:8px;
 }
-.steam-btn{
+.btn-group{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.primary-btn, .secondary-btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  min-width:154px;
+  min-width:140px;
   min-height:42px;
-  padding:11px 16px;
-  border:1px solid var(--line-strong);
+  padding:11px 18px;
   border-radius:7px;
-  background:#12171e;
   font-size:11px;
   font-weight:800;
   letter-spacing:.06em;
   white-space:nowrap;
   transition:.2s ease;
 }
-.steam-btn:hover{
+.primary-btn{
+  border:1px solid var(--line-strong);
+  background:#12171e;
+  color:#fff;
+}
+.primary-btn:hover{
   background:#fff;
   color:#07090d;
   border-color:#fff;
 }
 
-/* ABOUT */
-.about-grid{
+/* ABOUT / FEATURES */
+.about-features{
   display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:18px;
+  grid-template-columns:repeat(3, 1fr);
+  gap:20px;
+  margin-bottom:24px;
 }
-.info-card{
-  min-width:0;
+.feature-card{
   padding:28px;
   border:1px solid var(--line);
   border-radius:12px;
-  background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.008)),var(--panel);
+  background:var(--panel);
 }
-.info-card h3{
-  margin:0 0 10px;
-  font-size:17px;
+.feature-card h3{
+  margin:0 0 12px;
+  font-size:18px;
+  letter-spacing:-.02em;
 }
-.info-card p{
+.feature-card p{
   margin:0;
   color:var(--muted);
   font-size:14px;
-  line-height:1.75;
+  line-height:1.7;
 }
-.techline{
-  margin-top:20px;
+
+/* NEWS / UPDATES */
+.news-list{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:20px;
+}
+.news-item{
+  padding:24px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--panel);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.news-date{
   color:var(--muted2);
-  font-size:10px;
+  font-size:11px;
   font-weight:700;
-  letter-spacing:.1em;
+  margin-bottom:10px;
+}
+.news-title{
+  font-size:15px;
+  font-weight:700;
+  line-height:1.5;
+  margin:0 0 12px;
+}
+.news-snippet{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+  margin:0;
+}
+
+/* CONTACT & FOOTER INFO */
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+.contact-card{
+  padding:32px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--panel);
+}
+.contact-card h3{
+  margin:0 0 8px;
+  font-size:18px;
+}
+.contact-card p{
+  margin:0 0 20px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
+}
+.contact-detail{
+  font-size:13px;
+  color:var(--text);
+  line-height:1.8;
+}
+.contact-detail span{
+  color:var(--muted2);
+  display:inline-block;
+  width:90px;
 }
 
 /* FOOTER */
 .site-footer{
-  padding:30px 0 44px;
+  padding:40px 0;
   color:var(--muted2);
-  font-size:11px;
+  font-size:12px;
+  border-top:1px solid var(--line);
 }
 .footer-inner{
   display:flex;
-  align-items:center;
+  flex-direction:column;
+  gap:20px;
+}
+.footer-top{
+  display:flex;
   justify-content:space-between;
-  gap:18px;
+  align-items:center;
   flex-wrap:wrap;
+  gap:16px;
+}
+.footer-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-top:1px solid rgba(255,255,255,.05);
+  padding-top:20px;
+  flex-wrap:wrap;
+  gap:12px;
 }
 
-/* TABLET */
+/* RESPONSIVE */
 @media (max-width: 980px){
   .container{width:min(var(--max), calc(100% - 40px))}
   .hero-inner{
@@ -304,85 +396,22 @@ img{display:block;max-width:100%;height:auto}
     gap:42px;
     padding:68px 0;
   }
-  .hero-visual{
-    justify-content:flex-start;
-  }
-  .hero-visual img{
-    width:230px;
-  }
-  .section-head{
-    grid-template-columns:1fr;
-    gap:12px;
-  }
-  .section-head p{max-width:640px}
+  .hero-visual{justify-content:flex-start}
+  .hero-visual img{width:230px}
+  .section-head{grid-template-columns:1fr;gap:12px}
+  .about-features, .news-list, .contact-grid{grid-template-columns:1fr}
 }
 
-/* MOBILE */
 @media (max-width: 700px){
   .container{width:calc(100% - 28px)}
   .site-header{height:62px}
   .nav-links{display:none}
-  .brand{font-size:13px}
-  .brand img{width:30px;height:30px}
-
-  .hero-inner{
-    padding:52px 0 58px;
-    gap:34px;
-  }
-  .hero h1{
-    font-size:clamp(48px,18vw,72px);
-    overflow-wrap:anywhere;
-  }
-  .hero-copy{
-    margin-top:20px;
-    font-size:16px;
-    line-height:1.68;
-  }
-  .hero-visual img{
-    width:min(210px,68vw);
-  }
-
+  .hero-inner{padding:52px 0 58px;gap:34px}
+  .hero h1{font-size:clamp(44px,16vw,68px)}
   .section{padding:64px 0}
-  .section-head{margin-bottom:24px}
-  .section-head h2{font-size:29px}
-
-  .game-card{border-radius:10px}
-  .game-art{aspect-ratio:16 / 10}
-  .game-body{
-    padding:22px;
-    grid-template-columns:1fr;
-    gap:24px;
-  }
-  .game-title{font-size:32px}
-  .game-desc{font-size:14px}
-  .steam-btn{
-    width:100%;
-    min-height:44px;
-  }
-
-  .about-grid{grid-template-columns:1fr}
-  .info-card{padding:22px}
-  .techline{
-    line-height:1.65;
-    overflow-wrap:anywhere;
-  }
-  .footer-inner{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-}
-
-/* SMALL MOBILE */
-@media (max-width: 380px){
-  .container{width:calc(100% - 22px)}
-  .hero h1{font-size:46px}
-  .hero-visual img{width:180px}
-  .tags span,.game-tags span{font-size:9px}
-}
-
-/* ultrawide: prevent content from spreading */
-@media (min-width: 1600px){
-  :root{--max:1200px}
+  .game-body{padding:22px;grid-template-columns:1fr;gap:24px}
+  .btn-group{flex-direction:column}
+  .primary-btn{width:100%}
 }
 </style>
 </head>
@@ -390,22 +419,18 @@ img{display:block;max-width:100%;height:auto}
 <body>
 <div class="page-bg"></div>
 
+<!-- HEADER -->
 <header class="site-header">
   <div class="container nav">
     <a class="brand" href="#top">
-      <img
-        src="assets/cranova-logo-256.webp"
-        srcset="assets/cranova-logo-256.webp 256w, assets/cranova-logo-512.webp 512w"
-        sizes="32px"
-        alt="CRANOVA logo"
-        width="32"
-        height="32">
+      <img src="assets/cranova-logo-256.webp" alt="CRANOVA logo" width="32" height="32">
       <span>CRANOVA</span>
     </a>
 
     <nav class="nav-links" aria-label="Primary">
-      <a href="#games">Games</a>
       <a href="#about">About</a>
+      <a href="#games">Games</a>
+      <a href="#news">News</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -413,134 +438,181 @@ img{display:block;max-width:100%;height:auto}
 
 <main id="top">
 
+  <!-- HERO -->
   <section class="hero">
     <div class="container hero-inner">
       <div>
         <div class="eyebrow">Independent Game Studio</div>
         <h1>CRANOVA</h1>
-
         <p class="hero-copy">
-          Independent game studio focused on building systems-driven PC games.
+          CRANOVA는 독창적인 시스템과 몰입감 있는 네트워크 경험을 바탕으로 다양한 플랫폼에서 즐길 수 있는 게임을 개발하는 독립 스튜디오입니다.
         </p>
-
         <div class="tags">
-          <span>SYSTEMS</span>
-          <span>MULTIPLAYER</span>
-          <span>PC</span>
+          <span>SYSTEM DESIGN</span>
+          <span>NETWORK SYNCHRONIZATION</span>
+          <span>CROSS PLATFORM</span>
         </div>
       </div>
 
       <div class="hero-visual">
-        <img
-          src="assets/cranova-logo-512.webp"
-          srcset="
-            assets/cranova-logo-256.webp 256w,
-            assets/cranova-logo-512.webp 512w,
-            assets/cranova-logo-1024.webp 1024w"
-          sizes="(max-width:700px) 210px, (max-width:980px) 230px, 360px"
-          alt="CRANOVA"
-          width="512"
-          height="512"
-          fetchpriority="high">
+        <img src="assets/cranova-logo-512.webp" alt="CRANOVA" width="512" height="512" fetchpriority="high">
       </div>
     </div>
   </section>
 
-  <section class="section" id="games">
-    <div class="container">
-
-      <div class="section-head">
-        <div>
-          <div class="section-label">Games</div>
-          <h2>Our Games</h2>
-        </div>
-        <p>PC games developed and operated by CRANOVA.</p>
-      </div>
-
-      <article class="game-card">
-        <div class="game-art">
-          <img
-            src="assets/arvel-960.webp"
-            srcset="
-              assets/arvel-640.webp 640w,
-              assets/arvel-960.webp 960w,
-              assets/arvel-1232.webp 1232w"
-            sizes="(max-width:700px) calc(100vw - 28px), (max-width:1200px) calc(100vw - 40px), 1160px"
-            alt="ARVEL"
-            width="1232"
-            height="706"
-            loading="lazy">
-        </div>
-
-        <div class="game-body">
-          <div>
-            <div class="status">AVAILABLE ON STEAM</div>
-            <h3 class="game-title">ARVEL</h3>
-
-            <p class="game-desc">
-              An action RPG set in a world where five kingdoms clash.
-              Recruit mercenaries who fight according to their unique personalities,
-              build your squad, and take part in faction wars where armies collide.
-            </p>
-
-            <div class="game-tags">
-              <span>ACTION RPG</span>
-              <span>PC</span>
-              <span>STEAM</span>
-            </div>
-          </div>
-
-          <a
-            class="steam-btn"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer">
-            VIEW ON STEAM →
-          </a>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
+  <!-- ABOUT -->
   <section class="section" id="about">
     <div class="container">
-
       <div class="section-head">
         <div>
-          <div class="section-label">About</div>
-          <h2>About CRANOVA</h2>
+          <div class="section-label">Overview</div>
+          <h2>Studio Vision</h2>
         </div>
-        <p>CRANOVA is an independent game studio based in the Republic of Korea.</p>
+        <p>깊이 있는 시스템 메커니즘과 유저 간의 상호작용을 중심으로, 플랫폼의 경계 없이 지속 가능한 즐거움을 만들어갑니다.</p>
       </div>
 
-      <div class="about-grid">
-        <div class="info-card">
-          <h3>Development</h3>
-          <p>
-            CRANOVA develops PC games with a focus on gameplay systems,
-            multiplayer interaction, and long-term player progression.
-          </p>
-          <div class="techline">
-            GAMEPLAY SYSTEMS · MULTIPLAYER · LIVE DEVELOPMENT
+      <div class="about-features">
+        <div class="feature-card">
+          <h3>Systems-Driven</h3>
+          <p>단순한 연출을 넘어 정교하게 설계된 인게임 규칙과 유기적인 시스템 메커니즘을 최우선으로 고려합니다.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Multiplatform Network</h3>
+          <p>PC와 모바일을 아우르는 최적화된 동기화 기술 및 다중 접속 기술을 연구하고 적용합니다.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Long-term Operations</h3>
+          <p>지속적인 업데이트와 커뮤니티 피드백 반영을 통해 오랫동안 가치를 유지하는 게임을 만듭니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAMES -->
+  <section class="section" id="games">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-label">Projects</div>
+          <h2>Our Games</h2>
+        </div>
+        <p>CRANOVA에서 개발 및 준비 중인 프로젝트 라인업입니다.</p>
+      </div>
+
+      <div class="games-grid">
+        <!-- GAME 1 -->
+        <article class="game-card">
+          <div class="game-art">
+            <img src="assets/arvel-960.webp" alt="ARVEL" width="1232" height="706" loading="lazy">
+          </div>
+          <div class="game-body">
+            <div>
+              <div class="status">AVAILABLE ON STEAM</div>
+              <h3 class="game-title">ARVEL</h3>
+              <p class="game-desc">
+                다섯 세력이 대립하는 세계관을 배경으로 한 액션 RPG. 고유한 개성을 가진 용병들을 영입하여 부대를 편성하고, 대규모 군단이 충돌하는 분쟁 지역에서 승리를 세우십시오.
+              </p>
+              <div class="game-tags">
+                <span>ACTION RPG</span>
+                <span>PC</span>
+                <span>STEAM</span>
+              </div>
+            </div>
+            <div class="btn-group">
+              <a class="primary-btn" href="#" target="_blank" rel="noopener noreferrer">STEAM STORE →</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS & UPDATES -->
+  <section class="section" id="news">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-label">Updates</div>
+          <h2>Latest News</h2>
+        </div>
+        <p>스튜디오의 최신 개발 현황 및 공식 소식을 전달해 드립니다.</p>
+      </div>
+
+      <div class="news-list">
+        <article class="news-item">
+          <div>
+            <div class="news-date">2026.08.01</div>
+            <h3 class="news-title">스튜디오 공식 웹사이트 개편</h3>
+            <p class="news-snippet">CRANOVA의 신규 개발 프로젝트 및 스튜디오 소식을 전달할 공식 페이지가 개편되었습니다.</p>
+          </div>
+        </article>
+        <article class="news-item">
+          <div>
+            <div class="news-date">2026.06.15</div>
+            <h3 class="news-title">개발 네트워크 시스템 최적화 진행</h3>
+            <p class="news-snippet">다중 접속 환경에서의 동기화 오차를 줄이기 위한 자체 서버 구조 개선 작업이 완료되었습니다.</p>
+          </div>
+        </article>
+        <article class="news-item">
+          <div>
+            <div class="news-date">2026.04.10</div>
+            <h3 class="news-title">ARVEL 신규 패치 적용 안내</h3>
+            <p class="news-snippet">인기술 및 시스템 밸런스 조정을 포함한 최신 업데이트가 적용되었습니다.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT & CAREERS -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-label">Contact & Careers</div>
+          <h2>Get in Touch</h2>
+        </div>
+        <p>비즈니스 제휴, 기술 문의 및 인재 채용 관련 안내입니다.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>Business & Support</h3>
+          <p>퍼블리싱, 마케팅 제휴, 기타 사업 관련 문의는 아래 메일로 연락해 주시기 바랍니다.</p>
+          <div class="contact-detail">
+            <div><span>Business</span> contact@cranova.com</div>
+            <div><span>Support</span> support@cranova.com</div>
+            <div><span>Location</span> Republic of Korea</div>
           </div>
         </div>
 
-        <div class="info-card" id="contact">
-          <h3>Contact</h3>
-          <p>Business and support contact information will be added here.</p>
+        <div class="contact-card">
+          <h3>Careers</h3>
+          <p>CRANOVA와 함께 독창적인 게임 시스템을 만들어갈 열정적인 개발자를 모집합나다.</p>
+          <div class="contact-detail">
+            <div><span>Recruit</span> careers@cranova.com</div>
+            <div><span>Openings</span> Client / Server / Game Design</div>
+          </div>
         </div>
       </div>
-
     </div>
   </section>
 
 </main>
 
+<!-- FOOTER -->
 <footer class="site-footer">
   <div class="container footer-inner">
-    <span>© 2026 CRANOVA. All rights reserved.</span>
-    <span>Independent Game Studio · Republic of Korea</span>
+    <div class="footer-top">
+      <div class="brand">
+        <span>CRANOVA</span>
+      </div>
+      <div>Independent Game Studio · Republic of Korea</div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CRANOVA. All rights reserved.</span>
+      <span>Privacy Policy · Terms of Service</span>
+    </div>
   </div>
 </footer>
 
