@@ -31,6 +31,7 @@ body{
   font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
+  user-select:none;
 }
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%;height:auto}
@@ -45,30 +46,39 @@ img{display:block;max-width:100%;height:auto}
   inset:0;
   z-index:-1;
   pointer-events:none;
-  perspective:800px;
+  perspective:1000px;
   overflow:hidden;
   background:#040508;
+}
+
+.bg-scene-3d{
+  position:absolute;
+  width:100%;
+  height:100%;
+  transform-style:preserve-3d;
+  will-change:transform;
+  transition:transform 0.1s ease-out;
 }
 
 /* 3D Floor Grid */
 .bg-grid-3d{
   position:absolute;
-  width:200%;
-  height:200%;
-  top:-50%;
-  left:-50%;
+  width:300%;
+  height:300%;
+  top:-100%;
+  left:-100%;
   background-image:
-    linear-gradient(to right, rgba(162,140,255,.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(162,140,255,.08) 1px, transparent 1px);
+    linear-gradient(to right, rgba(162,140,255,.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(162,140,255,.12) 1px, transparent 1px);
   background-size:60px 60px;
-  transform:rotateX(60deg) translateZ(-200px);
+  transform:rotateX(65deg) translateZ(-200px);
   transform-origin:50% 50%;
   animation:gridMove 20s linear infinite;
 }
 
 @keyframes gridMove {
-  0% { transform:rotateX(60deg) translateZ(-200px) translateY(0); }
-  100% { transform:rotateX(60deg) translateZ(-200px) translateY(60px); }
+  0% { transform:rotateX(65deg) translateZ(-200px) translateY(0); }
+  100% { transform:rotateX(65deg) translateZ(-200px) translateY(60px); }
 }
 
 /* Floating 3D Glowing Orbs */
@@ -80,15 +90,15 @@ img{display:block;max-width:100%;height:auto}
   animation:orbFloat 12s ease-in-out infinite alternate;
 }
 .bg-orb-1{
-  width:500px;
-  height:500px;
+  width:600px;
+  height:600px;
   background:radial-gradient(circle, rgba(162,140,255,.4), transparent 70%);
   top:-100px;
   left:-100px;
 }
 .bg-orb-2{
-  width:600px;
-  height:600px;
+  width:700px;
+  height:700px;
   background:radial-gradient(circle, rgba(88,207,255,.3), transparent 70%);
   bottom:-150px;
   right:-100px;
@@ -104,6 +114,7 @@ img{display:block;max-width:100%;height:auto}
 .bg-fog{
   position:absolute;
   inset:0;
+  pointer-events:none;
   background:
     radial-gradient(circle at 50% 30%, transparent 20%, var(--bg) 85%),
     linear-gradient(to bottom, transparent 60%, var(--bg) 100%);
@@ -193,7 +204,6 @@ img{display:block;max-width:100%;height:auto}
   background:linear-gradient(135deg, #ffffff 40%, #aeb6c2 100%);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  drop-shadow:0 10px 20px rgba(0,0,0,.5);
 }
 .hero-copy{
   margin:24px 0 0;
@@ -379,7 +389,7 @@ img{display:block;max-width:100%;height:auto}
   gap:8px;
 }
 
-/* BUTTON INTERACTION */
+/* BUTTON & FORM INTERACTION */
 .btn-group{
   display:flex;
   gap:10px;
@@ -404,6 +414,7 @@ img{display:block;max-width:100%;height:auto}
   backdrop-filter:blur(8px);
   color:#fff;
   box-shadow:0 4px 12px rgba(0,0,0,.4);
+  cursor:pointer;
 }
 .primary-btn:hover{
   background:#fff;
@@ -411,6 +422,37 @@ img{display:block;max-width:100%;height:auto}
   border-color:#fff;
   box-shadow:0 6px 24px rgba(255,255,255,.4);
   transform:translateY(-2px);
+}
+
+/* DISCORD FORM STYLES */
+.discord-form{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-top:16px;
+}
+.discord-form input,
+.discord-form textarea{
+  width:100%;
+  padding:12px 14px;
+  border-radius:8px;
+  border:1px solid var(--line-strong);
+  background:rgba(0,0,0,.4);
+  color:var(--text);
+  font-family:inherit;
+  font-size:13px;
+  outline:none;
+  transition:border-color .3s ease, box-shadow .3s ease;
+  user-select:text;
+}
+.discord-form input:focus,
+.discord-form textarea:focus{
+  border-color:var(--violet);
+  box-shadow:0 0 12px var(--violet-glow);
+}
+.discord-form textarea{
+  resize:vertical;
+  min-height:90px;
 }
 
 /* ABOUT FEATURES GRID */
@@ -519,11 +561,13 @@ img{display:block;max-width:100%;height:auto}
 
 <body>
 
-<!-- 3D DYNAMIC PERSPECTIVE BACKGROUND -->
+<!-- 3D DYNAMIC PERSPECTIVE BACKGROUND WITH DRAG ROTATION -->
 <div class="bg-viewport">
-  <div class="bg-orb bg-orb-1"></div>
-  <div class="bg-orb bg-orb-2"></div>
-  <div class="bg-grid-3d"></div>
+  <div class="bg-scene-3d" id="bgScene">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-grid-3d"></div>
+  </div>
   <div class="bg-fog"></div>
 </div>
 
@@ -634,7 +678,7 @@ img{display:block;max-width:100%;height:auto}
     </div>
   </section>
 
-  <!-- CONTACT & CAREERS -->
+  <!-- CONTACT & DISCORD WEBHOOK FORM -->
   <section class="section" id="contact">
     <div class="container">
       <div class="section-head">
@@ -642,25 +686,27 @@ img{display:block;max-width:100%;height:auto}
           <div class="section-label">Contact & Careers</div>
           <h2>Get in Touch</h2>
         </div>
-        <p>비즈니스 제휴, 기술 문의 및 인재 채용 관련 안내입니다.</p>
+        <p>디스코드 웹훅을 통해 스튜디오로 직접 메시지를 전송하실 수 있습니다.</p>
       </div>
 
       <div class="contact-grid">
+        <!-- DISCORD DIRECT MESSAGE FORM -->
         <div class="contact-card">
-          <h3>Business & Support</h3>
-          <p>퍼블리싱, 마케팅 제휴, 기타 사업 관련 문의는 아래 메일로 연락해 주시기 바랍니다.</p>
-          <div class="contact-detail">
-            <div><span>Business</span> contact@cranova.com</div>
-            <div><span>Support</span> support@cranova.com</div>
-            <div><span>Location</span> Republic of Korea</div>
-          </div>
+          <h3>Direct Message</h3>
+          <p>문의사항을 작성 후 전송하시면 스튜디오 디스코드 채널로 즉시 전송됩니다.</p>
+          <form class="discord-form" id="discordForm">
+            <input type="text" id="senderName" placeholder="성함 또는 닉네임" required>
+            <input type="text" id="senderContact" placeholder="연락처 (이메일 또는 디스코드 ID)">
+            <textarea id="senderMessage" placeholder="문의내용을 입력하세요..." required></textarea>
+            <button type="submit" class="primary-btn" id="submitBtn">MESSAGE SEND →</button>
+          </form>
         </div>
 
         <div class="contact-card">
-          <h3>Careers</h3>
+          <h3>Careers & Info</h3>
           <p>CRANOVA와 함께 독창적인 게임 시스템을 만들어갈 열정적인 개발자를 모집합나다.</p>
           <div class="contact-detail">
-            <div><span>Recruit</span> careers@cranova.com</div>
+            <div><span>Location</span> Republic of Korea</div>
             <div><span>Openings</span> Client / Server / Game Design</div>
           </div>
         </div>
@@ -685,6 +731,120 @@ img{display:block;max-width:100%;height:auto}
     </div>
   </div>
 </footer>
+
+<script>
+// 1. DISCORD WEBHOOK TRANSMISSION
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1535513706501513307/FkEzYgNTbl2bc-Fos4LYU0ckwSrO7mj1-4KvJ4RlS_mEeDNXei7KiBoHs0rX_n6TbOqv';
+
+document.getElementById('discordForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById('senderName').value;
+  const contact = document.getElementById('senderContact').value || '미입력';
+  const message = document.getElementById('senderMessage').value;
+  const submitBtn = document.getElementById('submitBtn');
+
+  submitBtn.disabled = true;
+  submitBtn.innerText = 'SENDING...';
+
+  const payload = {
+    embeds: [{
+      title: "📩 CRANOVA 웹사이트 신규 문의",
+      color: 0xa28cff,
+      fields: [
+        { name: "보낸이", value: name, inline: true },
+        { name: "연락처", value: contact, inline: true },
+        { name: "문의 내용", value: message }
+      ],
+      timestamp: new Date().toISOString()
+    }]
+  };
+
+  try {
+    const response = await fetch(DISCORD_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (response.ok) {
+      alert('메시지가 정상적으로 전송되었습니다!');
+      document.getElementById('discordForm').reset();
+    } else {
+      alert('전송 중 오류가 발생했습니다.');
+    }
+  } catch (error) {
+    alert('전송 실패: 네트워크 상태를 확인하세요.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerText = 'MESSAGE SEND →';
+  }
+});
+
+// 2. 3D BACKGROUND DRAG ROTATION CONTROLLER
+const bgScene = document.getElementById('bgScene');
+
+let isDragging = false;
+let startX = 0, startY = 0;
+let currentRotX = 0, currentRotY = 0;
+let targetRotX = 0, targetRotY = 0;
+
+function updateRotation() {
+  currentRotX += (targetRotX - currentRotX) * 0.08;
+  currentRotY += (targetRotY - currentRotY) * 0.08;
+
+  bgScene.style.transform = `rotateX(${-currentRotX}deg) rotateY(${currentRotY}deg)`;
+  requestAnimationFrame(updateRotation);
+}
+updateRotation();
+
+window.addEventListener('mousedown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+  isDragging = true;
+  startX = e.clientX;
+  startY = e.clientY;
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  const deltaX = e.clientX - startX;
+  const deltaY = e.clientY - startY;
+
+  targetRotY += deltaX * 0.04;
+  targetRotX += deltaY * 0.04;
+
+  targetRotX = Math.max(-25, Math.min(25, targetRotX));
+
+  startX = e.clientX;
+  startY = e.clientY;
+});
+
+window.addEventListener('mouseup', () => { isDragging = false; });
+
+// TOUCH SUPPORT FOR MOBILE
+window.addEventListener('touchstart', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+  isDragging = true;
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+});
+
+window.addEventListener('touchmove', (e) => {
+  if (!isDragging) return;
+  const deltaX = e.touches[0].clientX - startX;
+  const deltaY = e.touches[0].clientY - startY;
+
+  targetRotY += deltaX * 0.04;
+  targetRotX += deltaY * 0.04;
+
+  targetRotX = Math.max(-25, Math.min(25, targetRotX));
+
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+});
+
+window.addEventListener('touchend', () => { isDragging = false; });
+</script>
 
 </body>
 </html>
