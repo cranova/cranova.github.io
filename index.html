@@ -32,6 +32,8 @@ body{
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
   user-select:none;
+  word-break:keep-all; /* 단어 단위 줄바꿈 처리 */
+  word-wrap:break-word;
 }
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%;height:auto}
@@ -40,7 +42,7 @@ img{display:block;max-width:100%;height:auto}
   margin-inline:auto;
 }
 
-/* 3D SPACE BACKGROUND SYSTEM */
+/* DYNAMIC CANVAS SPACE BACKGROUND */
 .bg-viewport{
   position:fixed;
   inset:0;
@@ -51,83 +53,50 @@ img{display:block;max-width:100%;height:auto}
   background:#020305;
 }
 
-.bg-scene-3d{
+#spaceCanvas {
   position:absolute;
+  inset:0;
   width:100%;
   height:100%;
   transform-style:preserve-3d;
   will-change:transform;
-  transition:transform 0.1s ease-out;
 }
 
 /* Deep Space Nebula Glows */
 .nebula{
   position:absolute;
   border-radius:50%;
-  filter:blur(100px);
-  opacity:.5;
-  animation:spaceFloat 16s ease-in-out infinite alternate;
+  filter:blur(110px);
+  opacity:.45;
+  pointer-events:none;
+  animation:spaceFloat 20s ease-in-out infinite alternate;
 }
 .nebula-1{
   width:800px;
   height:800px;
-  background:radial-gradient(circle, rgba(126,82,255,.35), rgba(50,20,120,.15) 60%, transparent 80%);
+  background:radial-gradient(circle, rgba(126,82,255,.3), rgba(50,20,120,.1) 60%, transparent 80%);
   top:-200px;
   left:-200px;
-  transform:translateZ(-300px);
 }
 .nebula-2{
   width:900px;
   height:900px;
-  background:radial-gradient(circle, rgba(45,190,255,.25), rgba(15,60,110,.1) 60%, transparent 80%);
+  background:radial-gradient(circle, rgba(45,190,255,.22), rgba(15,60,110,.08) 60%, transparent 80%);
   bottom:-250px;
   right:-200px;
-  animation-delay:-8s;
-  transform:translateZ(-400px);
-}
-.nebula-3{
-  width:600px;
-  height:600px;
-  background:radial-gradient(circle, rgba(200,100,255,.2), transparent 70%);
-  top:40%;
-  left:30%;
-  transform:translateZ(-150px);
-  animation-delay:-4s;
+  animation-delay:-10s;
 }
 
 @keyframes spaceFloat {
-  0% { transform:translate3d(0, 0, -200px) scale(1); }
-  100% { transform:translate3d(80px, -50px, -100px) scale(1.15); }
+  0% { transform:translate3d(0, 0, 0) scale(1); }
+  100% { transform:translate3d(60px, -40px, 0) scale(1.1); }
 }
 
-/* 3D Starfield Pattern */
-.starfield{
-  position:absolute;
-  width:200%;
-  height:200%;
-  top:-50%;
-  left:-50%;
-  background-image:
-    radial-gradient(1.5px 1.5px at 10% 15%, rgba(255,255,255,.9), transparent),
-    radial-gradient(2px 2px at 20% 35%, rgba(255,255,255,.7), transparent),
-    radial-gradient(1px 1px at 30% 75%, rgba(255,255,255,.8), transparent),
-    radial-gradient(2.5px 2.5px at 40% 20%, rgba(162,140,255,.9), transparent),
-    radial-gradient(1.5px 1.5px at 50% 60%, rgba(255,255,255,.6), transparent),
-    radial-gradient(2px 2px at 60% 90%, rgba(88,207,255,.9), transparent),
-    radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,.8), transparent),
-    radial-gradient(2px 2px at 80% 70%, rgba(255,255,255,.7), transparent),
-    radial-gradient(1.5px 1.5px at 90% 10%, rgba(255,255,255,.9), transparent);
-  background-size:400px 400px;
-  transform:translateZ(-200px);
-  opacity:.85;
-}
-
-/* Cosmic Fog Overlay */
 .space-fog{
   position:absolute;
   inset:0;
   pointer-events:none;
-  background:radial-gradient(circle at 50% 50%, transparent 30%, var(--bg) 90%);
+  background:radial-gradient(circle at 50% 50%, transparent 40%, var(--bg) 95%);
 }
 
 /* HEADER */
@@ -284,7 +253,7 @@ img{display:block;max-width:100%;height:auto}
 .section-head{
   margin-bottom:40px;
   display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(280px,480px);
+  grid-template-columns:minmax(0,1fr) minmax(280px,520px);
   gap:36px;
   align-items:end;
 }
@@ -300,7 +269,7 @@ img{display:block;max-width:100%;height:auto}
   line-height:1.7;
 }
 
-/* 3D GLASS CARD INTERACTION */
+/* 3D GLASS CARD INTERACTION & ALIGNMENT */
 .about-features, .games-grid, .contact-grid{
   perspective:1000px;
 }
@@ -479,27 +448,38 @@ img{display:block;max-width:100%;height:auto}
   gap:24px;
 }
 .contact-card{
-  padding:32px;
+  padding:36px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
 .contact-card h3{
-  margin:0 0 8px;
-  font-size:18px;
+  margin:0 0 12px;
+  font-size:20px;
+  letter-spacing:-.02em;
 }
 .contact-card p{
-  margin:0 0 20px;
+  margin:0 0 24px;
   color:var(--muted);
   font-size:14px;
-  line-height:1.6;
+  line-height:1.75;
 }
 .contact-detail{
-  font-size:13px;
+  font-size:14px;
   color:var(--text);
-  line-height:1.8;
+  line-height:2;
+  margin-top:auto;
+}
+.contact-detail > div{
+  display:flex;
+  align-items:center;
+  gap:16px;
 }
 .contact-detail span{
   color:var(--muted2);
+  min-width:85px;
   display:inline-block;
-  width:90px;
+  font-weight:600;
 }
 
 /* FOOTER */
@@ -571,14 +551,11 @@ img{display:block;max-width:100%;height:auto}
 
 <body>
 
-<!-- 3D DYNAMIC SPACE BACKGROUND WITH DRAG ROTATION -->
+<!-- 3D DYNAMIC CANVAS SPACE BACKGROUND -->
 <div class="bg-viewport">
-  <div class="bg-scene-3d" id="bgScene">
-    <div class="nebula nebula-1"></div>
-    <div class="nebula nebula-2"></div>
-    <div class="nebula nebula-3"></div>
-    <div class="starfield"></div>
-  </div>
+  <div class="nebula nebula-1"></div>
+  <div class="nebula nebula-2"></div>
+  <canvas id="spaceCanvas"></canvas>
   <div class="space-fog"></div>
 </div>
 
@@ -703,8 +680,10 @@ img{display:block;max-width:100%;height:auto}
       <div class="contact-grid">
         <!-- DIRECT MESSAGE FORM -->
         <div class="contact-card">
-          <h3>Direct Message</h3>
-          <p>문의내용을 남겨주시면 담당자가 빠른 시일 내에 연락드립니다.</p>
+          <div>
+            <h3>Direct Message</h3>
+            <p>문의내용을 남겨주시면 담당자가 빠른 시일 내에 연락드립니다.</p>
+          </div>
           <form class="contact-form" id="contactForm">
             <input type="text" id="senderName" placeholder="성함 또는 닉네임" required>
             <input type="text" id="senderContact" placeholder="연락처 (이메일 등)">
@@ -714,11 +693,13 @@ img{display:block;max-width:100%;height:auto}
         </div>
 
         <div class="contact-card">
-          <h3>Careers & Info</h3>
-          <p>CRANOVA와 함께 독창적인 게임 시스템을 만들어갈 열정적인 개발자를 모집합나다.</p>
+          <div>
+            <h3>Careers & Info</h3>
+            <p>CRANOVA와 함께 독창적인 게임 시스템을 만들어갈 열정적인 개발자를 모집합니다.</p>
+          </div>
           <div class="contact-detail">
-            <div><span>Location</span> Republic of Korea</div>
-            <div><span>Openings</span> Client / Server / Game Design</div>
+            <div><span>Location</span>Republic of Korea</div>
+            <div><span>Openings</span>Client / Server / Game Design</div>
           </div>
         </div>
       </div>
@@ -792,25 +773,56 @@ document.getElementById('contactForm').addEventListener('submit', async function
   }
 });
 
-// 2. 3D SPACE BACKGROUND DRAG ROTATION CONTROLLER
-const bgScene = document.getElementById('bgScene');
+// 2. DYNAMIC CANVAS SPACE BACKGROUND & SHOOTING STARS
+const canvas = document.getElementById('spaceCanvas');
+const ctx = canvas.getContext('2d');
 
+let width, height;
+function resizeCanvas() {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// Stars Generator
+const numStars = 220;
+const stars = [];
+for (let i = 0; i < numStars; i++) {
+  stars.push({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    size: Math.random() * 1.8 + 0.3,
+    alpha: Math.random(),
+    twinkleSpeed: Math.random() * 0.02 + 0.005,
+    color: Math.random() > 0.3 ? '#ffffff' : (Math.random() > 0.5 ? '#a28cff' : '#58cfff')
+  });
+}
+
+// Shooting Stars Generator
+const shootingStars = [];
+function createShootingStar() {
+  if (shootingStars.length < 3 && Math.random() < 0.03) {
+    shootingStars.push({
+      x: Math.random() * width,
+      y: Math.random() * (height * 0.5),
+      length: Math.random() * 80 + 40,
+      speed: Math.random() * 10 + 6,
+      angle: 45 * (Math.PI / 180),
+      opacity: 1,
+      width: Math.random() * 1.5 + 0.5
+    });
+  }
+}
+
+// DRAG ROTATION CONTROLLER FOR CANVAS & NEBULA
 let isDragging = false;
 let startX = 0, startY = 0;
 let currentRotX = 0, currentRotY = 0;
 let targetRotX = 0, targetRotY = 0;
 
-function updateRotation() {
-  currentRotX += (targetRotX - currentRotX) * 0.08;
-  currentRotY += (targetRotY - currentRotY) * 0.08;
-
-  bgScene.style.transform = `rotateX(${-currentRotX}deg) rotateY(${currentRotY}deg)`;
-  requestAnimationFrame(updateRotation);
-}
-updateRotation();
-
 window.addEventListener('mousedown', (e) => {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+  if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes(e.target.tagName)) return;
   isDragging = true;
   startX = e.clientX;
   startY = e.clientY;
@@ -821,10 +833,9 @@ window.addEventListener('mousemove', (e) => {
   const deltaX = e.clientX - startX;
   const deltaY = e.clientY - startY;
 
-  targetRotY += deltaX * 0.04;
-  targetRotX += deltaY * 0.04;
-
-  targetRotX = Math.max(-25, Math.min(25, targetRotX));
+  targetRotY += deltaX * 0.03;
+  targetRotX += deltaY * 0.03;
+  targetRotX = Math.max(-20, Math.min(20, targetRotX));
 
   startX = e.clientX;
   startY = e.clientY;
@@ -832,29 +843,65 @@ window.addEventListener('mousemove', (e) => {
 
 window.addEventListener('mouseup', () => { isDragging = false; });
 
-// TOUCH SUPPORT FOR MOBILE
-window.addEventListener('touchstart', (e) => {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
-  isDragging = true;
-  startX = e.touches[0].clientX;
-  startY = e.touches[0].clientY;
-});
+// Render Animation Loop
+function animateSpace() {
+  ctx.clearRect(0, 0, width, height);
 
-window.addEventListener('touchmove', (e) => {
-  if (!isDragging) return;
-  const deltaX = e.touches[0].clientX - startX;
-  const deltaY = e.touches[0].clientY - startY;
+  // Smooth rotation damping
+  currentRotX += (targetRotX - currentRotX) * 0.08;
+  currentRotY += (targetRotY - currentRotY) * 0.08;
 
-  targetRotY += deltaX * 0.04;
-  targetRotX += deltaY * 0.04;
+  canvas.style.transform = `rotateX(${-currentRotX}deg) rotateY(${currentRotY}deg) scale(1.1)`;
 
-  targetRotX = Math.max(-25, Math.min(25, targetRotX));
+  // Draw Twinkling Stars
+  stars.forEach(star => {
+    star.alpha += star.twinkleSpeed;
+    if (star.alpha > 1 || star.alpha < 0.1) star.twinkleSpeed = -star.twinkleSpeed;
 
-  startX = e.touches[0].clientX;
-  startY = e.touches[0].clientY;
-});
+    ctx.save();
+    ctx.globalAlpha = Math.abs(star.alpha);
+    ctx.fillStyle = star.color;
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  });
 
-window.addEventListener('touchend', () => { isDragging = false; });
+  // Draw Shooting Stars (별똥별)
+  createShootingStar();
+  for (let i = shootingStars.length - 1; i >= 0; i--) {
+    const s = shootingStars[i];
+
+    ctx.save();
+    ctx.globalAlpha = s.opacity;
+    const endX = s.x - Math.cos(s.angle) * s.length;
+    const endY = s.y - Math.sin(s.angle) * s.length;
+
+    const grad = ctx.createLinearGradient(s.x, s.y, endX, endY);
+    grad.addColorStop(0, '#ffffff');
+    grad.addColorStop(0.5, '#a28cff');
+    grad.addColorStop(1, 'transparent');
+
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = s.width;
+    ctx.beginPath();
+    ctx.moveTo(s.x, s.y);
+    ctx.lineTo(endX, endY);
+    ctx.stroke();
+    ctx.restore();
+
+    s.x += Math.cos(s.angle) * s.speed;
+    s.y += Math.sin(s.angle) * s.speed;
+    s.opacity -= 0.015;
+
+    if (s.opacity <= 0 || s.x > width || s.y > height) {
+      shootingStars.splice(i, 1);
+    }
+  }
+
+  requestAnimationFrame(animateSpace);
+}
+animateSpace();
 </script>
 
 </body>
